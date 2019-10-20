@@ -9,15 +9,13 @@ app = Flask(__name__)
 
 @app.route("/output")
 def output():
-
 	return "Emergency Fastrack"
 
 
-	@app.route('/receiver', methods = ['POST', 'GET'])
+@app.route('/receiver', methods = ['POST', 'GET'])
 def worker(latitude, longitude):
-	# read json + reply
+	# read json + replys
 	data = request.get_json()["data"]
-
 	data_parsed = json.loads(data)
 
 	#Read in tables 
