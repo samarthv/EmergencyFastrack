@@ -63,7 +63,9 @@ def worker(latitude, longitude):
 	else:
 		num_to_call = "911"
 
-	return str(num_to_call)
+	return_dict = {"phoneNumber" : str(num_to_call)}	
+
+	return return_dict
 
 if __name__ == "__main__":
 	app.run()
