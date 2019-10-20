@@ -13,7 +13,7 @@ def output():
 	return "Emergency Fastrack"
 
 
-	@app.route('/receiver', methods = ['POST'])
+	@app.route('/receiver', methods = ['GET'])
 def worker(latitude, longitude):
 	# read json + reply
 	data = request.get_json()["data"]
