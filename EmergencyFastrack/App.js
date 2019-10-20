@@ -1,62 +1,200 @@
-import { AppLoading } from 'expo';
-import { Asset } from 'expo-asset';
-import * as Font from 'expo-font';
-import React, { useState } from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import * as React from 'react';
+import { TextInput, StackNavigator, TouchableOpacity, Text, View, StyleSheet } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
-import AppNavigator from './navigation/AppNavigator';
-
-export default function App(props) {
-  const [isLoadingComplete, setLoadingComplete] = useState(false);
-
-  if (!isLoadingComplete && !props.skipLoadingScreen) {
-    return (
-      <AppLoading
-        startAsync={loadResourcesAsync}
-        onError={handleLoadingError}
-        onFinish={() => handleFinishLoading(setLoadingComplete)}
-      />
-    );
-  } else {
+class HomeScreen extends React.Component {
+    
+  render() {
     return (
       <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <AppNavigator />
+        <Text style={styles.paragraph}>
+          Emergency Fastrack: What's Your Emergency?
+        </Text>
+        <TouchableOpacity
+          style={styles.customBtnBGFire}
+          onPress={() => {this.props.navigation.navigate('Fire')}} 
+        >
+          <Text style={styles.customBtnText}>Fire</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.customBtnBGCrime}
+          onPress={() => {this.props.navigation.navigate('Crime')}} 
+        >
+          <Text style={styles.customBtnText}>Crime</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.customBtnBGMedical}
+          onPress={() => {this.props.navigation.navigate('Fire')}} 
+        >
+          <Text style={styles.customBtnText}>Medical</Text>
+        </TouchableOpacity>
       </View>
     );
   }
 }
 
-async function loadResourcesAsync() {
-  await Promise.all([
-    Asset.loadAsync([
-      require('./assets/images/robot-dev.png'),
-      require('./assets/images/robot-prod.png'),
-    ]),
-    Font.loadAsync({
-      // This is the font that we are using for our tab bar
-      ...Ionicons.font,
-      // We include SpaceMono because we use it in HomeScreen.js. Feel free to
-      // remove this if you are not using it in your app
-      'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
-    }),
-  ]);
+class FireScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {text: ''};
+  }  
+  render() {
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.customBtnBGCall}
+          onPress={() => {alert("vyom make it call someone")}}
+        >
+          <Text style={styles.customBtnText}>Call Local Emergency Line</Text>
+        </TouchableOpacity>
+        <TextInput
+          style={{marginTop: 75, marginHorizontal: 20}}
+          placeholder="Enter your zip code or city"
+          onChangeText={(text) => this.setState({text})}
+          value={this.state.text}
+        />
+        <TouchableOpacity
+          style={styles.customBtnBGCall}
+          onPress={() => {alert(this.state.text)}}
+        >
+          <Text style={styles.customBtnText}>Call By Location</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.customBtnBGMap}
+          onPress={() => {this.props.navigation.navigate('Map')}}
+        >
+          <Text style={styles.customBtnText}>Go to Map Screen</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 }
 
-function handleLoadingError(error) {
-  // In this case, you might want to report the error to your error reporting
-  // service, for example Sentry
-  console.warn(error);
+class CrimeScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {text: ''};
+  }  
+  render() {
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.customBtnBGCall}
+          onPress={() => {alert("vyom make it call someone")}}
+        >
+          <Text style={styles.customBtnText}>Call Local Emergency Line</Text>
+        </TouchableOpacity>
+        <TextInput
+          style={{marginTop: 75, marginHorizontal: 20}}
+          placeholder="Enter your zip code or city"
+          onChangeText={(text) => this.setState({text})}
+          value={this.state.text}
+        />
+        <TouchableOpacity
+          style={styles.customBtnBGCall}
+          onPress={() => {alert(this.state.text)}}
+        >
+          <Text style={styles.customBtnText}>Call By Location</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.customBtnBGMap}
+          onPress={() => {this.props.navigation.navigate('Map')}}
+        >
+          <Text style={styles.customBtnText}>Go to Map Screen</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 }
 
-function handleFinishLoading(setLoadingComplete) {
-  setLoadingComplete(true);
+class MapScreen extends React.Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.paragraph}>
+          Jordan's Map Screen
+        </Text>
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
+    justifyContent: 'center',
   },
+  paragraph: {
+    marginTop: 75,
+    color: 'red',
+    backgroundColor: 'white',
+    fontSize: 30,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  customBtnText: {
+      fontSize: 30,
+      fontWeight: '400',
+      color: "#fff",
+  },
+  customBtnBGFire: {
+    alignItems: 'center',
+    backgroundColor: 'red',
+    height: 60,
+    paddingHorizontal: 30,
+    paddingVertical: 5,
+    borderRadius: 30,
+    marginTop: 75,
+    marginHorizontal: 30
+  },
+  customBtnBGCrime: {
+    alignItems: 'center',
+    backgroundColor: 'blue',
+    height: 60,
+    paddingHorizontal: 30,
+    paddingVertical: 5,
+    borderRadius: 30,
+    marginTop: 75,
+    marginHorizontal: 30
+  },
+  customBtnBGMedical: {
+    alignItems: 'center',
+    backgroundColor: 'green',
+    height: 60,
+    paddingHorizontal: 30,
+    paddingVertical: 5,
+    borderRadius: 30,
+    marginTop: 75,
+    marginHorizontal: 30
+  },
+  customBtnBGCall: {
+    alignItems: 'center',
+    backgroundColor: 'green',
+    paddingHorizontal: 30,
+    paddingVertical: 5,
+    borderRadius: 30,
+    marginTop: 50,
+    marginHorizontal: 30
+  },
+  customBtnBGMap: {
+    alignItems: 'center',
+    backgroundColor: 'gray',
+    marginTop: 100
+  }
 });
+
+
+const AppNavigator = createStackNavigator({
+  Home: {screen: HomeScreen},
+  Fire: {screen: FireScreen},
+  Crime: {screen: CrimeScreen},
+  Map: {screen: MapScreen}
+});
+
+const AppContainer = createAppContainer(AppNavigator);
+
+export default class App extends React.Component {
+  render() {
+    return <AppContainer />;
+  }
+}
