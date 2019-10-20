@@ -14,9 +14,9 @@ def output():
 
 
 	@app.route('/receiver', methods = ['GET'])
-def worker():
+def worker(latitude, longitude):
 	# read json + reply
-	data = request.get_json()
+	data = request.get_json()["data"]
 
 	data_parsed = json.loads(data)
 
@@ -63,7 +63,7 @@ def worker():
 	else:
 		num_to_call = "911"
 
-	return num_to_call
+	return str(num_to_call)
 
 if __name__ == "__main__":
 	app.run()
