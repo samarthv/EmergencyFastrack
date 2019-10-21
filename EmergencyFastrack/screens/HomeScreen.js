@@ -8,7 +8,10 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Button,
+  Alert,
 } from 'react-native';
+import $ from 'jquery';
 
 import { MonoText } from '../components/StyledText';
 
@@ -28,21 +31,31 @@ export default function HomeScreen() {
             style={styles.welcomeImage}
           />
         </View>
+        <div>
+          <Button
+            title="Fire Department"
+            color="#db504a"
+            onPress={() => Alert.alert('Button with adjusted color pressed')}
+          />
+        </div>
+        <div>
+          <Button
+            title="Police"
+            color="#3bceac"
+            onPress={() => Alert.alert('Button with adjusted color pressed')}
+          />
+        </div>
+        <div>
+          <Button
+            title="Ambulance"
+            color="#5bc0ec"
+            onPress={() => Alert.alert('Button with adjusted color pressed')}
+          />
+        </div>
+        <div>
+          {locLat}
+        </div>
 
-        <View style={styles.getStartedContainer}>
-          <DevelopmentModeNotice />
-
-          <Text style={styles.getStartedText}>Get started by opening</Text>
-
-          <View
-            style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-            <MonoText>screens/HomeScreen.js</MonoText>
-          </View>
-
-          <Text style={styles.getStartedText}>
-            Change this text and your app will automatically reload.
-          </Text>
-        </View>
 
         <View style={styles.helpContainer}>
           <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
@@ -95,6 +108,8 @@ function DevelopmentModeNotice() {
     );
   }
 }
+
+const locLat = JSON.stringify($('body').props)
 
 function handleLearnMorePress() {
   WebBrowser.openBrowserAsync(

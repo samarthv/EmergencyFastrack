@@ -1,22 +1,24 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
+import * as Location from 'expo-location';
 
 export default function LinksScreen() {
   return (
-    <ScrollView style={styles.container}>
-      {/**
-       * Go ahead and delete ExpoLinksView and replace it with your content;
-       * we just wanted to provide you with some helpful links.
-       */}
-      <ExpoLinksView />
-    </ScrollView>
+    <div>
+      {loc}
+    </div>
   );
 }
 
 LinksScreen.navigationOptions = {
   title: 'Links',
 };
+
+const geolocate = async () => {
+  let loc = await Location.getCurrentPositionAsync({});
+  return loc
+}
 
 const styles = StyleSheet.create({
   container: {
